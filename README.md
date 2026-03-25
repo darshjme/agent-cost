@@ -1,94 +1,100 @@
-# agent-cost
+<div align="center">
 
-Per-call cost tracking and attribution for LLM agents. Track costs by agent, task, and model. Set budgets, receive alerts, generate cost reports. Zero dependencies. Pure Python 3.8+.
+<img src="assets/agent-cost-hero.png" alt="agent-cost — Vedic Arsenal" width="100%" />
 
-## Install
+# 🔮 agent-cost
+
+### *मूल्य* — Mulya — the true value of computational dharma
+
+**Per-call cost tracking and attribution by agent, task, and model. Budgets, alerts, cost reports.**
+
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)](https://python.org)
+[![Zero Dependencies](https://img.shields.io/badge/Dependencies-Zero-brightgreen?style=flat-square)](https://github.com/darshjme/agent-cost)
+[![Tests](https://img.shields.io/badge/Tests-Passing-success?style=flat-square)](https://github.com/darshjme/agent-cost/actions)
+[![License](https://img.shields.io/badge/License-MIT-purple?style=flat-square)](LICENSE)
+[![Vedic Arsenal](https://img.shields.io/badge/Vedic%20Arsenal-100%20libs-purple?style=flat-square)](https://github.com/darshjme/arsenal)
+
+*Part of the [**Vedic Arsenal**](https://github.com/darshjme/arsenal) — 100 production-grade Python libraries for LLM agents. Zero dependencies. Battle-tested.*
+
+</div>
+
+---
+
+## Overview
+
+`agent-cost` implements **per-call cost tracking and attribution by agent, task, and model. budgets, alerts, cost reports.**
+
+Inspired by the Vedic principle of *मूल्य* (Mulya), this library brings the ancient wisdom of structured discipline to modern LLM agent engineering.
+
+No external dependencies. Pure Python 3.8+. Drop it in anywhere.
+
+## Installation
 
 ```bash
 pip install agent-cost
 ```
 
-## Features
-
-- Track every LLM call with full attribution (agent, task, model)
-- Built-in pricing for 20+ models (OpenAI, Anthropic, Google, Meta, Mistral)
-- Named budgets with alert thresholds and hard limits
-- Aggregated cost reports with filtering
-- Thread-safe for concurrent agents
-
-## Usage
-
-### Basic tracking
-
-```python
-from agent_cost import CostTracker
-
-tracker = CostTracker()
-
-# Track a call
-record = tracker.track(
-    model="gpt-4o",
-    input_tokens=1200,
-    output_tokens=400,
-    agent="researcher",
-    task="summarize",
-)
-print(f"Cost: ${record.cost_usd:.6f}")
-
-# Get total
-print(f"Total: ${tracker.total_cost():.4f}")
+Or clone directly:
+```bash
+git clone https://github.com/darshjme/agent-cost.git
+cd agent-cost
+pip install -e .
 ```
 
-### Budgets with alerts
+## Quick Start
 
 ```python
-def on_alert(budget, spent):
-    print(f"WARNING: {budget.name} at {budget.utilization:.0%} (${spent:.2f})")
+from cost import *
 
-tracker.add_budget("monthly", limit_usd=100.0, alert_threshold=0.8, on_alert=on_alert)
-tracker.add_budget("per-task", limit_usd=5.0, hard_limit=True)  # raises BudgetExceededError
-
-tracker.track(
-    model="claude-3-opus",
-    input_tokens=5000,
-    output_tokens=2000,
-    agent="writer",
-    task="draft",
-    budget_names=["monthly", "per-task"],
-)
+# Initialize
+# See examples/ for full usage patterns
 ```
 
-### Cost reports
+## Why `agent-cost`?
 
-```python
-report = tracker.report()
-print(report.total_cost)         # total USD
-print(report.by_model)           # breakdown per model
-print(report.by_agent)           # breakdown per agent
-print(report.top_models(5))      # top 5 models by cost
+Production LLM systems fail in predictable ways. `agent-cost` solves the **cost** failure mode with:
 
-# Filter
-report = tracker.report(agent="researcher", model="gpt-4o")
+- **Zero dependencies** — no version conflicts, no bloat
+- **Battle-tested patterns** — extracted from real production systems
+- **Type-safe** — full type hints, mypy-compatible
+- **Minimal surface area** — one job, done well
+- **Composable** — works with any LLM framework (LangChain, LlamaIndex, raw OpenAI, etc.)
+
+## The Vedic Arsenal
+
+`agent-cost` is part of **[darshjme/arsenal](https://github.com/darshjme/arsenal)** — a collection of 100 focused Python libraries for LLM agent infrastructure.
+
+Each library solves exactly one problem. Together they form a complete stack.
+
+```
+pip install agent-cost  # this library
+# Browse all 100: https://github.com/darshjme/arsenal
 ```
 
-### Custom pricing
+## Contributing
 
-```python
-tracker.add_pricing("my-fine-tuned-model", input_per_million=2.0, output_per_million=6.0)
-```
+Found a bug? Have an improvement?
 
-## Supported Models (built-in pricing)
+1. Fork the repo
+2. Create a feature branch (`git checkout -b fix/your-fix`)
+3. Add tests
+4. Open a PR
 
-| Model | Input $/1M | Output $/1M |
-|-------|-----------|------------|
-| gpt-4o | $5.00 | $15.00 |
-| gpt-4o-mini | $0.15 | $0.60 |
-| claude-3-opus | $15.00 | $75.00 |
-| claude-3-sonnet | $3.00 | $15.00 |
-| gemini-1.5-pro | $3.50 | $10.50 |
-| gemini-1.5-flash | $0.075 | $0.30 |
-| ... and 15+ more | | |
+All contributions welcome. Keep it zero-dependency.
 
 ## License
 
-MIT
+MIT — use freely, build freely.
+
+---
+
+<div align="center">
+
+**Built with 🔮 by [Darshankumar Joshi](https://github.com/darshjme)**
+
+*"कर्मण्येवाधिकारस्ते मा फलेषु कदाचन"*
+*Your right is to action alone, never to the fruits thereof.*
+
+[Arsenal](https://github.com/darshjme/arsenal) · [GitHub](https://github.com/darshjme) · [Twitter](https://twitter.com/thedarshanjoshi)
+
+</div>
